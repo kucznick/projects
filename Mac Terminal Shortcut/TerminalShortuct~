@@ -10,9 +10,7 @@ USERLIST="`ls /Users | grep -v "Shared" | grep -v "Library"`"
 
 for user in $USERLIST
 do
-        sudo mkdir /System/Library/User\ Template/Non_localized/Library/Services/
-	
-        #Create Keyboard Shortcut
+	#Create Keyboard Shortcut
 	sudo defaults write /Users/$user/Library/Preferences/.GlobalPreferences.plist NSUserKeyEquivalents -dict-add "Launch Terminal" "@\$t"
 	sudo chown $user /Users/$user/Library/Preferences/.GlobalPreferences.plist
 done
