@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#Nick Kuczwarskyj 2-July-2013
+
+#(1)Copy into all users and default template Services/Launch Terminal.workflow
+#(2)Run commandline to create ctrl+shift+t keyboard shortcut
+
+
+USERLIST="`ls /Users | grep -v "Shared" | grep -v "Library"`"
+
+for user in $USERLIST
+do
+	#Copy Workflow
+	sudo mkdir /Users/$user/Library/Services 
+	sudo cp -R /Volumes/IT/Nick\ Test/Launch\ Terminal.workflow /Users/$user/Library/Services/
+	
+	#Create Keyboard Shortcut
+	sudo defaults write /Users/$user/Library/Preferences/.GlobalPreferences.plist NSUserKeyEquivalents -dict-add "Launch Terminal" "@\$t"
+	sudo chown $user /Users/$user/Library/Preferences/.GlobalPreferences.plist
+done
+
+#####Default User template gets same treatment####
+
+#copy workflow
+sudo mkdir /System/Library/User\ Template/Non_localized/Library/Services/ 
+sudo cp -R /Volumes/IT/Nick\ Test/Launch\ Terminal.workflow /System/Library/User\ Template/Non_localized/Library/Services/
+
+##create keyboard shortcut
+sudo defaults write /System/Library/User\ Template/Non_localized/Library/Preferences/.GlobalPreferences.plist NSUserKeyEquivalents -dict-add "Launch Terminal" "@\$t"
+exit 0
